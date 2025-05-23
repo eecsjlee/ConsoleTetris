@@ -8,5 +8,6 @@ namespace ConsoleTetris.Constants
 {
     internal class GameConstants
     {
+
     }
 }

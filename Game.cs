@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsoleTetris.Input
+namespace ConsoleTetris
 {
-    internal class TetrominoType
+    internal class Game
     {
     }
 }

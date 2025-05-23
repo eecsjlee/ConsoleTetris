@@ -6,7 +6,14 @@ using System.Threading.Tasks;
 
 namespace ConsoleTetris.Core
 {
-    internal class TetrominoType
+    public enum TetrominoType
     {
+        I,
+        O,
+        T,
+        S,
+        Z,
+        J,
+        L
     }
 }
