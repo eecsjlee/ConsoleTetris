@@ -101,5 +101,71 @@ namespace ConsoleTetris.Core
 
             return false;
         }
+
+        public void FixTetromino(Tetromino tetromino)
+        {
+            int[,] shape = tetromino.GetCurrentShape();
+            int shapeHeight = shape.GetLength(0);
+            int shapeWidth = shape.GetLength(1);
+
+            for (int y = 0; y < shapeHeight; y++)
+            {
+                for (int x = 0; x < shapeWidth; x++)
+                {
+                    if (shape[y, x] == 1)
+                    {
+                        int boardX = tetromino.X + x;
+                        int boardY = tetromino.Y + y;
+
+                        if (boardY >= 0 && boardY < height && boardX >= 0 && boardX < width)
+                        {
+                            grid[boardY, boardX] = 1;
+                        }
+                    }
+                }
+            }
+        }
+
+        public int ClearLines()
+        {
+            int linesCleared = 0;
+
+            for (int y = height - 1; y >= 0; y--)
+            {
+                bool isFullLine = true;
+
+                for (int x = 0; x < width; x++)
+                {
+                    if (grid[y, x] == 0)
+                    {
+                        isFullLine = false;
+                        break;
+                    }
+                }
+
+                if (isFullLine)
+                {
+                    // 아래 줄들을 한 줄씩 내림
+                    for (int row = y; row > 0; row--)
+                    {
+                        for (int col = 0; col < width; col++)
+                        {
+                            grid[row, col] = grid[row - 1, col];
+                        }
+                    }
+
+                    // 맨 윗줄은 비움
+                    for (int col = 0; col < width; col++)
+                    {
+                        grid[0, col] = 0;
+                    }
+
+                    linesCleared++;
+                    y++; // 방금 내린 줄 다시 검사
+                }
+            }
+
+            return linesCleared;
+        }
     }
 }
