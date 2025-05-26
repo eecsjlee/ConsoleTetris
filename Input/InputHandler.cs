@@ -13,7 +13,9 @@ namespace ConsoleTetris.Input
         MoveRight,
         MoveDown,
         Rotate,
-        Exit
+        Exit,
+        Pause,
+        Restart
     }
 
     public static class InputHandler
@@ -31,6 +33,8 @@ namespace ConsoleTetris.Input
                 ConsoleKey.RightArrow => InputAction.MoveRight,
                 ConsoleKey.DownArrow => InputAction.MoveDown,
                 ConsoleKey.Spacebar => InputAction.Rotate,
+                ConsoleKey.P => InputAction.Pause,
+                ConsoleKey.R => InputAction.Restart,
                 ConsoleKey.Escape => InputAction.Exit,
                 _ => InputAction.None
             };
