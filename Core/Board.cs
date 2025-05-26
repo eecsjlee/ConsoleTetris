@@ -18,10 +18,15 @@ namespace ConsoleTetris.Core
 
         public void Draw(Tetromino? tetromino = null)
         {
-            Console.SetCursorPosition(0, 3); // 점수/레벨 아래로 출력
+            // 상단 테두리
+            Console.SetCursorPosition(0, 3);
+            Console.Write("┌" + new string('─', width * 2) + "┐");
 
             for (int y = 0; y < height; y++)
             {
+                Console.SetCursorPosition(0, y + 4);
+                Console.Write("│");
+
                 for (int x = 0; x < width; x++)
                 {
                     bool isTetrominoCell = false;
@@ -67,8 +72,12 @@ namespace ConsoleTetris.Core
                     }
                 }
 
-                Console.WriteLine();
+                Console.Write("│");
             }
+
+            // 하단 테두리
+            Console.SetCursorPosition(0, height + 4);
+            Console.Write("└" + new string('─', width * 2) + "┘");
         }
 
         public bool IsCollision(Tetromino tetromino, int offsetX = 0, int offsetY = 0, int? rotation = null)
@@ -158,7 +167,7 @@ namespace ConsoleTetris.Core
                     }
 
                     linesCleared++;
-                    y++; // 내려온 줄 다시 검사
+                    y++;
                 }
             }
 

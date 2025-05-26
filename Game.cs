@@ -24,7 +24,7 @@ namespace ConsoleTetris
 
         public Game()
         {
-            Restart(); // 게임 시작 시 초기화
+            Restart();
         }
 
         public void Run()
@@ -39,11 +39,17 @@ namespace ConsoleTetris
                     lastFallTime = DateTime.Now;
                 }
 
+                // 🔁 고정 위치 상태 출력
                 Console.SetCursorPosition(0, 0);
-                Console.WriteLine($"점수: {score}     ");
-                Console.WriteLine($"레벨: {level}     ");
-                Console.WriteLine(isPaused ? "⏸ 일시정지 중..." : "                  ");
+                Console.Write($"점수: {score}     ");
 
+                Console.SetCursorPosition(0, 1);
+                Console.Write($"레벨: {level}     ");
+
+                Console.SetCursorPosition(0, 2);
+                Console.Write(isPaused ? "⏸ 일시정지 중..." : "                   ");
+
+                Console.SetCursorPosition(0, 4);
                 board.Draw(tetromino);
 
                 Thread.Sleep(50);
@@ -59,22 +65,18 @@ namespace ConsoleTetris
                 case InputAction.Exit:
                     Environment.Exit(0);
                     break;
-
                 case InputAction.MoveLeft:
                     if (!isPaused && !board.IsCollision(tetromino, offsetX: -1))
                         tetromino.X -= 1;
                     break;
-
                 case InputAction.MoveRight:
                     if (!isPaused && !board.IsCollision(tetromino, offsetX: 1))
                         tetromino.X += 1;
                     break;
-
                 case InputAction.MoveDown:
                     if (!isPaused)
                         TryMoveOrFix();
                     break;
-
                 case InputAction.Rotate:
                     if (!isPaused)
                     {
@@ -83,11 +85,9 @@ namespace ConsoleTetris
                             tetromino.Rotate();
                     }
                     break;
-
                 case InputAction.Pause:
                     isPaused = !isPaused;
                     break;
-
                 case InputAction.Restart:
                     Restart();
                     break;
@@ -116,8 +116,8 @@ namespace ConsoleTetris
                         int newIntervalMs = Math.Max(100, 500 - (level - 1) * 50);
                         fallInterval = TimeSpan.FromMilliseconds(newIntervalMs);
 
-                        Console.SetCursorPosition(0, 2);
-                        Console.WriteLine($"레벨 {level} 달성! 속도 ↑     ");
+                        Console.SetCursorPosition(0, 3);
+                        Console.Write($"레벨 {level} 달성! 속도 ↑     ");
                     }
                 }
 
