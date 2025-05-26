@@ -7,18 +7,18 @@ namespace ConsoleTetris.Core
     {
         private readonly int width;
         private readonly int height;
-        private readonly int[,] grid;
+        private readonly TetrominoType?[,] grid;
 
         public Board(int width = 10, int height = 20)
         {
             this.width = width;
             this.height = height;
-            grid = new int[height, width];
+            grid = new TetrominoType?[height, width]; // null = 빈 셀
         }
 
         public void Draw(Tetromino? tetromino = null)
         {
-            Console.SetCursorPosition(0, 3); // 점수/레벨 아래로 시작
+            Console.SetCursorPosition(0, 3); // 점수/레벨 아래로 출력
 
             for (int y = 0; y < height; y++)
             {
@@ -55,9 +55,15 @@ namespace ConsoleTetris.Core
                         Console.Write("■");
                         Console.ResetColor();
                     }
+                    else if (grid[y, x] != null)
+                    {
+                        Console.ForegroundColor = GameConstants.ColorMap[grid[y, x].Value];
+                        Console.Write("■");
+                        Console.ResetColor();
+                    }
                     else
                     {
-                        Console.Write(grid[y, x] == 0 ? "." : "■");
+                        Console.Write(".");
                     }
                 }
 
@@ -87,7 +93,7 @@ namespace ConsoleTetris.Core
                     if (boardX < 0 || boardX >= width || boardY < 0 || boardY >= height)
                         return true;
 
-                    if (grid[boardY, boardX] != 0)
+                    if (grid[boardY, boardX] != null)
                         return true;
                 }
             }
@@ -112,7 +118,7 @@ namespace ConsoleTetris.Core
 
                         if (boardY >= 0 && boardY < height && boardX >= 0 && boardX < width)
                         {
-                            grid[boardY, boardX] = 1;
+                            grid[boardY, boardX] = tetromino.Type;
                         }
                     }
                 }
@@ -129,7 +135,7 @@ namespace ConsoleTetris.Core
 
                 for (int x = 0; x < width; x++)
                 {
-                    if (grid[y, x] == 0)
+                    if (grid[y, x] == null)
                     {
                         isFullLine = false;
                         break;
@@ -148,28 +154,15 @@ namespace ConsoleTetris.Core
 
                     for (int col = 0; col < width; col++)
                     {
-                        grid[0, col] = 0;
+                        grid[0, col] = null;
                     }
 
                     linesCleared++;
-                    y++; // 줄이 내려왔으므로 다시 검사
+                    y++; // 내려온 줄 다시 검사
                 }
             }
 
             return linesCleared;
-        }
-
-        public void SetCell(int x, int y, int value)
-        {
-            if (x >= 0 && x < width && y >= 0 && y < height)
-            {
-                grid[y, x] = value;
-            }
-        }
-
-        public int GetCell(int x, int y)
-        {
-            return (x >= 0 && x < width && y >= 0 && y < height) ? grid[y, x] : 1;
         }
     }
 }
