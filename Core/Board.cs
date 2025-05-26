@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ConsoleTetris.Constants;
+using System;
 
 namespace ConsoleTetris.Core
 {
@@ -21,13 +18,14 @@ namespace ConsoleTetris.Core
 
         public void Draw(Tetromino? tetromino = null)
         {
-            Console.Clear();
+            Console.SetCursorPosition(0, 3); // 점수/레벨 아래로 시작
 
             for (int y = 0; y < height; y++)
             {
                 for (int x = 0; x < width; x++)
                 {
                     bool isTetrominoCell = false;
+                    ConsoleColor cellColor = ConsoleColor.White;
 
                     if (tetromino != null)
                     {
@@ -45,31 +43,26 @@ namespace ConsoleTetris.Core
                                 if (boardX == x && boardY == y && shape[sy, sx] == 1)
                                 {
                                     isTetrominoCell = true;
+                                    cellColor = GameConstants.ColorMap[tetromino.Type];
                                 }
                             }
                         }
                     }
 
                     if (isTetrominoCell)
-                        Console.Write(" # ");
+                    {
+                        Console.ForegroundColor = cellColor;
+                        Console.Write("■");
+                        Console.ResetColor();
+                    }
                     else
-                        Console.Write(grid[y, x] == 0 ? " . " : " # ");
+                    {
+                        Console.Write(grid[y, x] == 0 ? "." : "■");
+                    }
                 }
+
                 Console.WriteLine();
             }
-        }
-
-        public void SetCell(int x, int y, int value)
-        {
-            if (x >= 0 && x < width && y >= 0 && y < height)
-            {
-                grid[y, x] = value;
-            }
-        }
-
-        public int GetCell(int x, int y)
-        {
-            return (x >= 0 && x < width && y >= 0 && y < height) ? grid[y, x] : 1;
         }
 
         public bool IsCollision(Tetromino tetromino, int offsetX = 0, int offsetY = 0, int? rotation = null)
@@ -92,10 +85,10 @@ namespace ConsoleTetris.Core
                     int boardY = tetromino.Y + y + offsetY;
 
                     if (boardX < 0 || boardX >= width || boardY < 0 || boardY >= height)
-                        return true; // 벽 또는 바닥과 충돌
+                        return true;
 
                     if (grid[boardY, boardX] != 0)
-                        return true; // 기존 블록과 충돌
+                        return true;
                 }
             }
 
@@ -145,7 +138,6 @@ namespace ConsoleTetris.Core
 
                 if (isFullLine)
                 {
-                    // 아래 줄들을 한 줄씩 내림
                     for (int row = y; row > 0; row--)
                     {
                         for (int col = 0; col < width; col++)
@@ -154,18 +146,30 @@ namespace ConsoleTetris.Core
                         }
                     }
 
-                    // 맨 윗줄은 비움
                     for (int col = 0; col < width; col++)
                     {
                         grid[0, col] = 0;
                     }
 
                     linesCleared++;
-                    y++; // 방금 내린 줄 다시 검사
+                    y++; // 줄이 내려왔으므로 다시 검사
                 }
             }
 
             return linesCleared;
+        }
+
+        public void SetCell(int x, int y, int value)
+        {
+            if (x >= 0 && x < width && y >= 0 && y < height)
+            {
+                grid[y, x] = value;
+            }
+        }
+
+        public int GetCell(int x, int y)
+        {
+            return (x >= 0 && x < width && y >= 0 && y < height) ? grid[y, x] : 1;
         }
     }
 }
