@@ -6,18 +6,6 @@ using System.Threading.Tasks;
 
 namespace ConsoleTetris.Input
 {
-    public enum InputAction
-    {
-        None,
-        MoveLeft,
-        MoveRight,
-        MoveDown,
-        Rotate,
-        Exit,
-        Pause,
-        Restart
-    }
-
     public static class InputHandler
     {
         public static InputAction GetInput()
