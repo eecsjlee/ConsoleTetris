@@ -68,8 +68,9 @@ namespace ConsoleTetris.Core
                     }
                     else
                     {
-                        Console.Write(".");
+                        Console.Write(". ");
                     }
+
                 }
 
                 Console.Write("│");
