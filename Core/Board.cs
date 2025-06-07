@@ -48,7 +48,7 @@ namespace ConsoleTetris.Core
                                 if (boardX == x && boardY == y && shape[sy, sx] == 1)
                                 {
                                     isTetrominoCell = true;
-                                    cellColor = GameConstants.ColorMap[tetromino.Type];
+                                    cellColor = TetrominoColors.ColorMap[tetromino.Type];
                                 }
                             }
                         }
@@ -62,7 +62,7 @@ namespace ConsoleTetris.Core
                     }
                     else if (grid[y, x] != null)
                     {
-                        Console.ForegroundColor = GameConstants.ColorMap[grid[y, x].Value];
+                        Console.ForegroundColor = TetrominoColors.ColorMap[grid[y, x].Value];
                         Console.Write("■");
                         Console.ResetColor();
                     }
