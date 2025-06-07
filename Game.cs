@@ -16,6 +16,7 @@ namespace ConsoleTetris
 
         private bool isPaused = false;
         private bool isGameOver = false;
+        private bool isSoftDropping = false;
 
         private DateTime lastFallTime;
         private TimeSpan fallInterval;
@@ -39,7 +40,7 @@ namespace ConsoleTetris
                     lastFallTime = DateTime.Now;
                 }
 
-                // 🔁 고정 위치 상태 출력
+                // 고정 위치 상태 출력
                 Console.SetCursorPosition(0, 0);
                 Console.Write($"점수: {score}     ");
 
@@ -47,7 +48,7 @@ namespace ConsoleTetris
                 Console.Write($"레벨: {level}     ");
 
                 Console.SetCursorPosition(0, 2);
-                Console.Write(isPaused ? "⏸ 일시정지 중..." : "                   ");
+                Console.Write(isPaused ? "일시정지 중..." : "                   ");
 
                 Console.SetCursorPosition(0, 4);
                 board.Draw(tetromino);
