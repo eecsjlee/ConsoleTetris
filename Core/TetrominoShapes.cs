@@ -50,8 +50,73 @@ namespace ConsoleTetris.Core
                         {0, 1}
                     }
                 },
-                // 나머지 S, Z, J, L 생략 가능 (나중에 추가)
-                _ => new int[1][,] { new int[1, 1] { { 1 } } }
+                TetrominoType.S => new int[][,]
+{
+                    new int[,] {
+                        {0, 1, 1},
+                        {1, 1, 0}
+                    },
+                    new int[,] {
+                        {1, 0},
+                        {1, 1},
+                        {0, 1}
+                    }
+},
+                TetrominoType.Z => new int[][,]
+                {
+                    new int[,] {
+                        {1, 1, 0},
+                        {0, 1, 1}
+                    },
+                    new int[,] {
+                        {0, 1},
+                        {1, 1},
+                        {1, 0}
+                    }
+                },
+                TetrominoType.J => new int[][,]
+                {
+                    new int[,] {
+                        {1, 0, 0},
+                        {1, 1, 1}
+                    },
+                    new int[,] {
+                        {1, 1},
+                        {1, 0},
+                        {1, 0}
+                    },
+                    new int[,] {
+                        {1, 1, 1},
+                        {0, 0, 1}
+                    },
+                    new int[,] {
+                        {0, 1},
+                        {0, 1},
+                        {1, 1}
+                    }
+                },
+                TetrominoType.L => new int[][,]
+                {
+                    new int[,] {
+                        {0, 0, 1},
+                        {1, 1, 1}
+                    },
+                    new int[,] {
+                        {1, 0},
+                        {1, 0},
+                        {1, 1}
+                    },
+                    new int[,] {
+                        {1, 1, 1},
+                        {1, 0, 0}
+                    },
+                    new int[,] {
+                        {1, 1},
+                        {0, 1},
+                        {0, 1}
+                    }
+                },
+                _ => new int[1][,] { new int[1, 1] { { 1 } } } // 예외 처리용 기본 모양
             };
         }
     }
